@@ -1,0 +1,24 @@
+﻿@page
+@using DncCookieSignin.Util
+@model DncCookieSignin.Pages.Account.LoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <section>
+        Is login:@UserContextService.IsLogin
+    </section>
+    <form method="post">
+        <input type="hidden" asp-for="@Model.ReturnUrl"/>
+        <button type="submit">LOGIN</button>
+    </form>
+</body>
+</html>

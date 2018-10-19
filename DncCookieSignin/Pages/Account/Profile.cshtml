@@ -1,0 +1,26 @@
+﻿@page
+@using DncCookieSignin.Util
+@model DncCookieSignin.Pages.Account.ProfileModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Profile</title>
+</head>
+<body>
+    <p>@TempData["message"]</p>
+    <p>Profile</p>
+    <section>
+        Is login:@UserContextService.IsLogin<br />
+        @*Login name:@UserContextService.LoginName <br />
+        Display name:@UserContextService.DisplayName <br />*@
+        .AspNetCore.Cookies:@Model.AspNetCoreCookie
+    </section>
+    <a asp-page="/account/logout">LOGOUT</a>
+</body>
+</html>
