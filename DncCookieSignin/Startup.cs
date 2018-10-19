@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -29,17 +30,19 @@ namespace DncCookieSignin
                 options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddMemoryCache();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });
+            var serviceProvider = services.BuildServiceProvider();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
                 options =>
                 {
                     options.LoginPath = "/account/login";
                     options.LogoutPath = "/account/logout";
-                    //options.SessionStore = new MemoryCacheTicketStore();
+                    options.SessionStore = new MemoryCacheTicketStore(serviceProvider.GetRequiredService<IMemoryCache>());
                 });
             services.AddSingleton<UserManagerService>();
             services.AddRouting(options =>
