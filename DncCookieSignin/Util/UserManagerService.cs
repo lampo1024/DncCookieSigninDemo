@@ -36,6 +36,7 @@ namespace DncCookieSignin.Util
         {
             //httpContext.SignOutAsync();
             httpContext.Session.Remove(SessionKeys.SessionKey(SessionKeys.UserLoginModel));
+            httpContext.Session.Clear();
         }
 
         public void Refresh(HttpContext httpContext, User user)

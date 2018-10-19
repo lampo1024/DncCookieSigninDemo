@@ -1,8 +1,10 @@
 ﻿@page
-@using DncCookieSignin.Util
+@using DncCookieSignin.Util;
+@using DncCookieSignin.Extensions;
 @model DncCookieSignin.Pages.Account.LoginModel
 @{
     Layout = null;
+    HttpContext.Session.Set(".session.name", "rector.liu");
 }
 
 <!DOCTYPE html>

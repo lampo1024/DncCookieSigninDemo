@@ -1,4 +1,5 @@
-﻿using DncCookieSignin.Util;
+﻿using DncCookieSignin.Extensions;
+using DncCookieSignin.Util;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace DncCookieSignin.Pages.Account
@@ -9,6 +10,7 @@ namespace DncCookieSignin.Pages.Account
         public string AspNetCoreCookie { get; set; }
         public void OnGet()
         {
+            var session = HttpContext.Session.Get<User>(SessionKeys.SessionKey(SessionKeys.UserLoginModel));
             AspNetCoreCookie = Request.Cookies[".AspNetCore.Cookies"];
         }
     }

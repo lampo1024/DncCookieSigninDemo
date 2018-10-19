@@ -17,9 +17,15 @@
     <p>Profile</p>
     <section>
         Is login:@UserContextService.IsLogin<br />
-        @*Login name:@UserContextService.LoginName <br />
-        Display name:@UserContextService.DisplayName <br />*@
-        .AspNetCore.Cookies:@Model.AspNetCoreCookie
+        Login name:@UserContextService.LoginName <br />
+        Display name:@UserContextService.DisplayName <br />
+        .AspNetCore.Cookies:@Model.AspNetCoreCookie <br />
+        Session ID:@HttpContext.Session.Id  <br />
+        Session keys:
+        @foreach (var key in HttpContext.Session.Keys)
+        {
+            <p>Session key:@key</p>
+        }
     </section>
     <a asp-page="/account/logout">LOGOUT</a>
 </body>
