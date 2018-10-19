@@ -6,8 +6,8 @@ namespace DncCookieSignin.Pages.Account
 {
     public class RefreshModel : PageModel
     {
-        private readonly UserManagerService _userManagerService;
-        public RefreshModel(UserManagerService userManagerService)
+        private readonly SessionUserManagerService _userManagerService;
+        public RefreshModel(SessionUserManagerService userManagerService)
         {
             _userManagerService = userManagerService;
         }

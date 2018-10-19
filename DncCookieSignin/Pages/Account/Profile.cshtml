@@ -20,6 +20,7 @@
         Login name:@UserContextService.LoginName <br />
         Display name:@UserContextService.DisplayName <br />
         .AspNetCore.Cookies:@Model.AspNetCoreCookie <br />
+        CacheCallbackMessage:@Model.CacheCallbackMessage <br />
         Session ID:@HttpContext.Session.Id  <br />
         Session keys:
         @foreach (var key in HttpContext.Session.Keys)

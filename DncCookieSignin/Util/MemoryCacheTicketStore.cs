@@ -36,10 +36,10 @@ namespace DncCookieSignin.Util
             {
                 options.SetAbsoluteExpiration(expiresUtc.Value);
             }
-            options.SetSlidingExpiration(TimeSpan.FromHours(8)); // TODO: configurable.
+            options.SetSlidingExpiration(TimeSpan.FromSeconds(10)); // TODO: configurable.
             options.RegisterPostEvictionCallback(MyCallback, this);
             _cache.Set(key, ticket, options);
-
+            _cache.Set("callbackMessage", "message from memory cache", TimeSpan.FromHours(1));
             return Task.FromResult(0);
         }
 
@@ -47,7 +47,7 @@ namespace DncCookieSignin.Util
         {
             var message = $"Cache entry was removed : {reason}";
             
-            _cache.Set("callbackMessage", message);
+            _cache.Set("callbackMessage", message, TimeSpan.FromHours(1));
         }
 
         public Task<AuthenticationTicket> RetrieveAsync(string key)

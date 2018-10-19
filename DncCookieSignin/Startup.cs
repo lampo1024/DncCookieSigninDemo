@@ -35,6 +35,8 @@ namespace DncCookieSignin
             {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });
+            services.AddSingleton<IUserManagerService, MemoryCacheUserManagerService>();
+            services.AddSingleton<ITicketStore, MemoryCacheTicketStore>();
             var serviceProvider = services.BuildServiceProvider();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
@@ -42,9 +44,9 @@ namespace DncCookieSignin
                 {
                     options.LoginPath = "/account/login";
                     options.LogoutPath = "/account/logout";
-                    options.SessionStore = new MemoryCacheTicketStore(serviceProvider.GetRequiredService<IMemoryCache>());
+                    options.SessionStore = serviceProvider.GetRequiredService<ITicketStore>(); //new MemoryCacheTicketStore(serviceProvider.GetRequiredService<IMemoryCache>());
                 });
-            services.AddSingleton<UserManagerService>();
+            
             services.AddRouting(options =>
             {
                 options.LowercaseUrls = true;
@@ -61,8 +63,8 @@ namespace DncCookieSignin
                 .AddSessionStateTempDataProvider()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            
-            
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

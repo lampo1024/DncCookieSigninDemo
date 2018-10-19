@@ -1,52 +1,26 @@
 ﻿using DncCookieSignin.Extensions;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Security.Claims;
 
 namespace DncCookieSignin.Util
 {
-    public class UserManagerService
+    public class SessionUserManagerService : IUserManagerService
     {
-        //private readonly User _user;
-        //public UserManagerService()
-        //{
-        //    _user = new User
-        //    {
-        //        Id = 1,
-        //        FirstName = "Rector",
-        //        LastName = "Liu",
-        //        Email = "example@email.com",
-        //        LoginName = "admin",
-        //        Password = "111111",
-        //        Roles = "admin"
-        //    };
-        //}
         public void SignIn(HttpContext httpContext, User user, bool isPersistent = false)
         {
-            //ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(user), CookieAuthenticationDefaults.AuthenticationScheme);
-            //ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-
-            //await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
             httpContext.Session.Set(SessionKeys.SessionKey(SessionKeys.UserLoginModel), user);
         }
 
         public void SignOut(HttpContext httpContext)
         {
-            //httpContext.SignOutAsync();
             httpContext.Session.Remove(SessionKeys.SessionKey(SessionKeys.UserLoginModel));
             httpContext.Session.Clear();
         }
 
         public void Refresh(HttpContext httpContext, User user)
         {
-            //ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(user), CookieAuthenticationDefaults.AuthenticationScheme);
-            //ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-
-            //await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-            SignIn(httpContext,user);
+            SignIn(httpContext, user);
         }
 
         private IEnumerable<Claim> GetUserClaims(User user)

@@ -1,5 +1,6 @@
 ﻿using DncCookieSignin.Extensions;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace DncCookieSignin.Util
 {
@@ -33,12 +34,12 @@ namespace DncCookieSignin.Util
         {
             get
             {
-                //return _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
-                if (!_httpContextAccessor.HttpContext.Session.SessionExists(SessionKeys.SessionKey(SessionKeys.UserLoginModel)))
-                {
-                    return false;
-                }
-                return true;
+                return _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+                //if (!_httpContextAccessor.HttpContext.Session.SessionExists(SessionKeys.SessionKey(SessionKeys.UserLoginModel)))
+                //{
+                //    return false;
+                //}
+                //return true;
             }
         }
 
@@ -58,8 +59,8 @@ namespace DncCookieSignin.Util
         {
             get
             {
-                return CurrentUser?.LoginName;
-                //return _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "loginName")?.Value;
+                //return CurrentUser?.LoginName;
+                return _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "loginName")?.Value;
             }
         }
 
@@ -67,10 +68,10 @@ namespace DncCookieSignin.Util
         {
             get
             {
-                //var displayName = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "displayName")?.Value;
-                //displayName = string.IsNullOrEmpty(displayName) ? "未知" : displayName;
-                //return displayName;
-                return CurrentUser?.FirstName + " " + CurrentUser?.LastName;
+                var displayName = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "displayName")?.Value;
+                displayName = string.IsNullOrEmpty(displayName) ? "未知" : displayName;
+                return displayName;
+                //return CurrentUser?.FirstName + " " + CurrentUser?.LastName;
             }
         }
 

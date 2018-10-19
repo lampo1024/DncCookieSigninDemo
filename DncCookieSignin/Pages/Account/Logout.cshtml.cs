@@ -7,8 +7,8 @@ namespace DncCookieSignin.Pages.Account
 {
     public class LogoutModel : PageModel
     {
-        private readonly UserManagerService _userManagerService;
-        public LogoutModel(UserManagerService userManagerService)
+        private readonly IUserManagerService _userManagerService;
+        public LogoutModel(IUserManagerService userManagerService)
         {
             _userManagerService = userManagerService;
         }
